@@ -13,7 +13,7 @@ import com.example.android.sunshine.views.ForecastItemClickListener;
 import com.example.android.sunshine.views.ForecastItemViewHolder;
 
 public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHolder> implements ForecastDataHolder {
-    String[] mWeatherData;
+    WeatherData[] mWeatherData;
     ForecastItemClickListener mClickListener;
 
     public ForecastItemAdapter(ForecastItemClickListener clickListener) {
@@ -45,7 +45,7 @@ public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHo
     }
 
     @Override
-    public void setWeatherData(String[] weatherData) {
+    public void setWeatherData(WeatherData[] weatherData) {
         mWeatherData = weatherData;
         notifyDataSetChanged();
     }

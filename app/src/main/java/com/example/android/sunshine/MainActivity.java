@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.sunshine.data.FetchWeatherTask;
 import com.example.android.sunshine.data.ForecastItemAdapter;
+import com.example.android.sunshine.data.WeatherData;
 import com.example.android.sunshine.utilities.Constants;
 import com.example.android.sunshine.views.ForecastDataHandler;
 import com.example.android.sunshine.views.ForecastItemClickListener;
@@ -78,10 +79,9 @@ public class MainActivity extends AppCompatActivity implements ForecastItemClick
     }
 
     @Override
-    public void onForecastItemClicked(Integer position, String forecastItemData) {
+    public void onForecastItemClicked(Integer position, WeatherData forecastItemData) {
         Intent detailActivityIntent = new Intent(this, DetailActivity.class);
-        detailActivityIntent.putExtra(Constants.WEATHER_DATA_EXTRA,
-                position + ": " + forecastItemData);
+        detailActivityIntent.putExtra(Constants.WEATHER_DATA_EXTRA, forecastItemData);
         startActivity(detailActivityIntent);
         // Toast.makeText(this, position + ": " + forecastItemData, Toast.LENGTH_SHORT).show();
     }

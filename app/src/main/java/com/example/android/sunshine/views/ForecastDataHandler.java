@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.sunshine.data.ForecastDataChangeListener;
 import com.example.android.sunshine.data.ForecastDataHolder;
+import com.example.android.sunshine.data.WeatherData;
 
 public class ForecastDataHandler implements ForecastDataChangeListener {
     RecyclerView mForecastItemListRecyclerView;
@@ -27,7 +28,7 @@ public class ForecastDataHandler implements ForecastDataChangeListener {
     }
 
     @Override
-    public void onForecastDataChanged(String[] forecastData) {
+    public void onForecastDataChanged(WeatherData[] forecastData) {
         mForecastDataProgressBar.setVisibility(View.INVISIBLE);
 
         if (forecastData == null) {

@@ -1,6 +1,6 @@
 package com.example.android.sunshine.data;
 
 public interface ForecastDataChangeListener {
-    void onForecastDataChanged(String[] forecastData);
+    void onForecastDataChanged(WeatherData[] forecastData);
     void onForecastDataProgress(Integer progress);
 }
