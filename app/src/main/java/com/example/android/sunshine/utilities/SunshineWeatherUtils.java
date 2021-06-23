@@ -346,7 +346,10 @@ public final class SunshineWeatherUtils {
             return R.drawable.ic_light_clouds;
         } else if (weatherId >= 802 && weatherId <= 804) {
             return R.drawable.ic_cloudy;
+        } else if (weatherId == 901 || weatherId == 902 || weatherId == 960) {
+            return R.drawable.ic_storm;
         }
+
         return -1;
     }
 

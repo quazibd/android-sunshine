@@ -25,16 +25,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.sunshine.data.FetchWeatherTask;
 import com.example.android.sunshine.data.ForecastItemAdapter;
 import com.example.android.sunshine.data.WeatherData;
 import com.example.android.sunshine.utilities.Constants;
-import com.example.android.sunshine.views.ForecastDataHandler;
 import com.example.android.sunshine.views.ForecastItemClickListener;
 import com.example.android.sunshine.views.MainViewModel;
 
@@ -58,17 +55,17 @@ public class MainActivity extends AppCompatActivity implements ForecastItemClick
         mForecastItemAdapter = new ForecastItemAdapter(this);
 
         // Initializing the RecyclerView.
-        mForecastItemListRecyclerView = (RecyclerView) findViewById(R.id.rv_forecast);
+        mForecastItemListRecyclerView = findViewById(R.id.rv_forecast);
         mForecastItemListRecyclerView.setHasFixedSize(true);
         mForecastItemListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mForecastItemListRecyclerView.setAdapter(mForecastItemAdapter);
 
         // The text view for data load error. This is shown in the place of the RecyclerView if
         // the returned WeatherData is null.
-        mForecastDataErrorTextView = (TextView) findViewById(R.id.weather_data_load_error);
+        mForecastDataErrorTextView = findViewById(R.id.weather_data_load_error);
 
         // The progress bar to show during loading of data.
-        mForecastDataProgressBar = (ProgressBar) findViewById(R.id.weather_data_loading_bar);
+        mForecastDataProgressBar = findViewById(R.id.weather_data_loading_bar);
 
         mViewModel.getWeatherData().observe(
                 this, weatherData -> {

@@ -14,7 +14,7 @@ import com.example.android.sunshine.databinding.ForecastListItemBinding;
 import com.example.android.sunshine.views.ForecastItemClickListener;
 import com.example.android.sunshine.views.ForecastItemViewHolder;
 
-public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHolder> implements ForecastDataHolder {
+public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHolder> {
     WeatherData[] mWeatherData;
     ForecastItemClickListener mClickListener;
 
@@ -26,11 +26,9 @@ public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHo
     @Override
     public ForecastItemViewHolder onCreateViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parentViewGroup.getContext());
-        boolean shouldAttachToParentImmediately = false;
         ForecastListItemBinding forecastListItemBinding =
-                ForecastListItemBinding.inflate(layoutInflater, parentViewGroup, shouldAttachToParentImmediately);
-        ForecastItemViewHolder itemViewHolder = new ForecastItemViewHolder(forecastListItemBinding, mClickListener);
-        return itemViewHolder;
+                ForecastListItemBinding.inflate(layoutInflater, parentViewGroup, false);
+        return new ForecastItemViewHolder(forecastListItemBinding, mClickListener);
     }
 
     @Override
@@ -44,7 +42,6 @@ public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHo
         return mWeatherData == null ? 0 : mWeatherData.length;
     }
 
-    @Override
     public void setWeatherData(WeatherData[] weatherData) {
         mWeatherData = weatherData;
         notifyDataSetChanged();

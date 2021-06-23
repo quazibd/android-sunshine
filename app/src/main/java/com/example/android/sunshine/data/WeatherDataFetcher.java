@@ -25,16 +25,13 @@ public class WeatherDataFetcher {
         this.context = context;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void refreshWeatherData() {
         Executor networkExecutor = AppExecutors.getInstance().getNetworkIOExecutor();
         networkExecutor.execute(
-                new Runnable() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void run() {
-                        WeatherData[] weatherData = fetchWeatherData(context);
-                        listener.onWeatherDataReady(weatherData);
-                    }
+                () -> {
+                    WeatherData[] weatherData = fetchWeatherData(context);
+                    listener.onWeatherDataReady(weatherData);
                 }
         );
     }
@@ -50,9 +47,9 @@ public class WeatherDataFetcher {
             weatherResults =
                     OpenWeatherJsonUtils.getWeatherDataFromJson(context, fetchResult);
         } catch (IOException e) {
-            Log.d("FetchWeatherTask", "Exception while fetching data from URL: " + urlToFetch, e);
+            Log.d("WeatherDataFetcher", "Exception while fetching data from URL: " + urlToFetch, e);
         } catch (JSONException je) {
-            Log.d("FetchWeatherTask", "Exception while parsing JSON from URL: " + urlToFetch, je);
+            Log.d("WeatherDataFetcher", "Exception while parsing JSON from URL: " + urlToFetch, je);
         }
 
         return weatherResults;
