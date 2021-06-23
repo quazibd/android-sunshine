@@ -18,6 +18,7 @@ package com.example.android.sunshine.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -182,7 +183,8 @@ public final class OpenWeatherJsonUtils {
          * the values are returned in-order by day (which is not guaranteed to be correct).
          */
         long dateTimeMillis = startDay + SunshineDateUtils.DAY_IN_MILLIS * index;
-        weatherData.setDay(Date.from(Instant.ofEpochMilli(dateTimeMillis)));
+        Date fakeDayForIndex = Date.from(Instant.ofEpochMilli(dateTimeMillis));
+        weatherData.setDay(fakeDayForIndex);
 
         /*
          * Description is in a child array called "weather", which is 1 element long.

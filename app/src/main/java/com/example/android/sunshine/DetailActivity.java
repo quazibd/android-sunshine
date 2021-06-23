@@ -10,22 +10,23 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import com.example.android.sunshine.data.WeatherData;
+import com.example.android.sunshine.databinding.ActivityDetailBinding;
 import com.example.android.sunshine.utilities.Constants;
 
 public class DetailActivity extends AppCompatActivity {
-    TextView mDetailWeatherTextView;
+    ActivityDetailBinding mActivityDetailBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        mActivityDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         Intent intent = getIntent();
         WeatherData forecastItemData = intent.getParcelableExtra(Constants.WEATHER_DATA_EXTRA);
-        mDetailWeatherTextView = (TextView) findViewById(R.id.tv_detail_weather);
-        mDetailWeatherTextView.setText(forecastItemData.toString());
+        mActivityDetailBinding.setWeatherDetail(forecastItemData.toString());
     }
 
     @Override
@@ -39,7 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.share_menu) {
             Intent sendIntent = new Intent();
             sendIntent.setAction(Intent.ACTION_SEND);
-            sendIntent.putExtra(Intent.EXTRA_TEXT, mDetailWeatherTextView.getText());
+            sendIntent.putExtra(Intent.EXTRA_TEXT, mActivityDetailBinding.tvDetailWeather.getText());
             sendIntent.setType("text/plain");
 
             Intent shareIntent = Intent.createChooser(sendIntent, "Fake Weather Details");

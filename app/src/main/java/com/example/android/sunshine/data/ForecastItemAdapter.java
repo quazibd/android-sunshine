@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.sunshine.R;
+import com.example.android.sunshine.databinding.ForecastListItemBinding;
 import com.example.android.sunshine.views.ForecastItemClickListener;
 import com.example.android.sunshine.views.ForecastItemViewHolder;
 
@@ -23,13 +25,11 @@ public class ForecastItemAdapter extends RecyclerView.Adapter<ForecastItemViewHo
 
     @Override
     public ForecastItemViewHolder onCreateViewHolder(@NonNull ViewGroup parentViewGroup, int viewType) {
-        int layoutIdForListItem = R.layout.forecast_list_item;
-        LayoutInflater inflater = LayoutInflater.from(parentViewGroup.getContext());
+        LayoutInflater layoutInflater = LayoutInflater.from(parentViewGroup.getContext());
         boolean shouldAttachToParentImmediately = false;
-
-        View view = inflater.inflate(layoutIdForListItem, parentViewGroup, shouldAttachToParentImmediately);
-        ForecastItemViewHolder itemViewHolder = new ForecastItemViewHolder(view, mClickListener);
-
+        ForecastListItemBinding forecastListItemBinding =
+                ForecastListItemBinding.inflate(layoutInflater, parentViewGroup, shouldAttachToParentImmediately);
+        ForecastItemViewHolder itemViewHolder = new ForecastItemViewHolder(forecastListItemBinding, mClickListener);
         return itemViewHolder;
     }
 

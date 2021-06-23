@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.example.android.sunshine.utilities.SunshineWeatherUtils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -77,7 +78,7 @@ public class WeatherData implements Parcelable {
         this.humidityPercentage = humidityPercentage;
     }
 
-    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("EEEE, MMM d");
+    private static final SimpleDateFormat SHORT_DATE_FORMAT = new SimpleDateFormat("EEEE, MMM d");
     private Date day;
     private double highTemp;
     private double lowTemp;
@@ -92,7 +93,7 @@ public class WeatherData implements Parcelable {
     }
 
     public WeatherData(Parcel in) {
-        this.day = fromSimpleDateString(in.readString());
+        this.day = new Date(in.readLong());
         this.highTemp = in.readDouble();
         this.lowTemp = in.readDouble();
         this.weatherCode = in.readInt();
@@ -104,7 +105,7 @@ public class WeatherData implements Parcelable {
 
     @Override
     public String toString() {
-        return "Date: " + getSimpleDateString(getDay()) + "\n" +
+        return "Date: " + SHORT_DATE_FORMAT.format(getDay()) + "\n" +
                 "High: " + getHighTemp() + "\n" +
                 "Low: " + getLowTemp() + "\n" +
                 "Label: " + getWeatherLabel() + "\n" +
@@ -114,9 +115,12 @@ public class WeatherData implements Parcelable {
     }
 
     public String toShortString(Context context) {
-        String[] tokens = {getSimpleDateString(this.day), this.weatherLabel,
+        String[] tokens = {
+                SHORT_DATE_FORMAT.format(getDay()),
+                this.weatherLabel,
                 SunshineWeatherUtils.formatHighLows(context,
-                        this.highTemp, this.lowTemp)};
+                        this.highTemp, this.lowTemp)
+        };
         return TextUtils.join(" - ", tokens);
     }
 
@@ -139,26 +143,21 @@ public class WeatherData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(getSimpleDateString(day));
-        parcel.writeDouble(highTemp);
-        parcel.writeDouble(lowTemp);
-        parcel.writeInt(weatherCode);
-        parcel.writeString(weatherLabel);
-        parcel.writeDouble(windSpeed);
-        parcel.writeDouble(pressure);
-        parcel.writeInt(humidityPercentage);
+        parcel.writeLong(getDay().getTime());
+        parcel.writeDouble(getHighTemp());
+        parcel.writeDouble(getLowTemp());
+        parcel.writeInt(getWeatherCode());
+        parcel.writeString(getWeatherLabel());
+        parcel.writeDouble(getWindSpeed());
+        parcel.writeDouble(getPressure());
+        parcel.writeInt(getHumidityPercentage());
     }
 
-
-    private static String getSimpleDateString(Date date) {
-        return SIMPLE_DATE_FORMAT.format(date);
-    }
-
-    private static Date fromSimpleDateString(String dateString) {
+    private static Date fromSimpleDateString(String dateString, DateFormat dateFormat) {
         Date d = new Date();
 
         try {
-            d = SIMPLE_DATE_FORMAT.parse(dateString);
+            d = dateFormat.parse(dateString);
 
         } catch (ParseException e) {
             Log.d("WeatherData", "Could not parse date: (" + dateString + ")", e);

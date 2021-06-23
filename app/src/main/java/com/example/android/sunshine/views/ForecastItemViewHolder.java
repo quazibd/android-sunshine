@@ -2,32 +2,31 @@ package com.example.android.sunshine.views;
 
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.android.sunshine.R;
 import com.example.android.sunshine.data.WeatherData;
+import com.example.android.sunshine.databinding.ForecastListItemBinding;
 
 public class ForecastItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    TextView mItemTextView;
+    ForecastListItemBinding mItemBinding;
     WeatherData mItemData;
     ForecastItemClickListener mClickListener;
 
-    public ForecastItemViewHolder(@NonNull View itemView, ForecastItemClickListener clickListener) {
-        super(itemView);
-        mItemTextView = (TextView) itemView.findViewById(R.id.tv_weather_data);
-
-        mClickListener = clickListener;
-        itemView.setOnClickListener(this);
+    public ForecastItemViewHolder(@NonNull ForecastListItemBinding forecastListItemBinding,
+                                  ForecastItemClickListener clickListener) {
+        super(forecastListItemBinding.getRoot());
+        this.mItemBinding = forecastListItemBinding;
+        this.mClickListener = clickListener;
+        mItemBinding.getRoot().setOnClickListener(this);
     }
 
     public void bind(WeatherData itemData) {
         mItemData = itemData;
 
         Log.d("ForecastItemViewHolder", "Bind : " + itemData);
-        mItemTextView.setText(mItemData.toShortString(mItemTextView.getContext()));
+        mItemBinding.tvWeatherData.setText(mItemData.toShortString(mItemBinding.getRoot().getContext()));
     }
 
     @Override
